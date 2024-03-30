@@ -328,12 +328,12 @@ mod tests {
 
         for i in 0..10 {
             assert_eq!(lru_cache.len(), i);
-            let _ = lru_cache.insert(i, i);
+            lru_cache.insert(i, i);
             assert_eq!(lru_cache.len(), i + 1);
         }
 
         for i in 10..1000 {
-            let _ = lru_cache.insert(i, i);
+            lru_cache.insert(i, i);
             assert_eq!(lru_cache.len(), size);
         }
 
@@ -351,18 +351,18 @@ mod tests {
 
         for i in 0..10 {
             assert_eq!(lru_cache.len(), i);
-            let _ = lru_cache.insert(i, i);
+            lru_cache.insert(i, i);
             assert_eq!(lru_cache.len(), i + 1);
         }
 
         advance_time_by_ms(101);
-        let _ = lru_cache.insert(11, 11);
+        lru_cache.insert(11, 11);
 
         assert_eq!(lru_cache.len(), 1);
 
         for i in 0..10 {
             assert_eq!(lru_cache.len(), i + 1);
-            let _ = lru_cache.insert(i, i);
+            lru_cache.insert(i, i);
             assert_eq!(lru_cache.len(), i + 2);
         }
 
@@ -376,7 +376,7 @@ mod tests {
         let mut lru_cache = LruCache::<usize, usize>::new(time_to_live, usize::MAX);
 
         assert_eq!(lru_cache.len(), 0);
-        let _ = lru_cache.insert(0, 0);
+        lru_cache.insert(0, 0);
         assert_eq!(lru_cache.len(), 1);
 
         advance_time_by_ms(101);
@@ -396,7 +396,7 @@ mod tests {
                 assert_eq!(lru_cache.len(), i);
             }
 
-            let _ = lru_cache.insert(i, i);
+            lru_cache.insert(i, i);
 
             if i < size {
                 assert_eq!(lru_cache.len(), i + 1);
@@ -406,7 +406,7 @@ mod tests {
         }
 
         advance_time_by_ms(101);
-        let _ = lru_cache.insert(1, 1);
+        lru_cache.insert(1, 1);
 
         assert_eq!(lru_cache.len(), 1);
     }
@@ -416,7 +416,7 @@ mod tests {
         let time_to_live = Duration::from_millis(50);
         let mut lru_cache = LruCache::<usize, usize>::new(time_to_live, usize::MAX);
 
-        let _ = lru_cache.insert(0, 1);
+        lru_cache.insert(0, 1);
         assert_eq!(lru_cache.len(), 1);
         assert_eq!(lru_cache.remove(&0), Some(1));
         assert_eq!(lru_cache.len(), 0);
@@ -446,7 +446,7 @@ mod tests {
                 assert_eq!(lru_cache.len(), i);
             }
 
-            let _ = lru_cache.insert(
+            lru_cache.insert(
                 Temp {
                     id: generate_random_vec::<u8>(64),
                 },
@@ -461,7 +461,7 @@ mod tests {
         }
 
         advance_time_by_ms(101);
-        let _ = lru_cache.insert(
+        lru_cache.insert(
             Temp {
                 id: generate_random_vec::<u8>(64),
             },
@@ -477,7 +477,7 @@ mod tests {
         let mut lru_cache = LruCache::<usize, usize>::new(time_to_live, usize::MAX);
 
         assert_eq!(lru_cache.len(), 0);
-        let _ = lru_cache.insert(0, 0);
+        lru_cache.insert(0, 0);
         assert_eq!(lru_cache.len(), 1);
 
         advance_time_by_ms(300);
@@ -494,7 +494,7 @@ mod tests {
         let mut lru_cache = LruCache::<usize, usize>::new(time_to_live, usize::MAX);
 
         assert_eq!(lru_cache.len(), 0);
-        let _ = lru_cache.insert(0, 0);
+        lru_cache.insert(0, 0);
         assert_eq!(lru_cache.len(), 1);
 
         advance_time_by_ms(300);
@@ -512,11 +512,11 @@ mod tests {
         fn it_removes_expired_entries_from_the_map() {
             let ttl = Duration::from_millis(200);
             let mut lru_cache = LruCache::<usize, usize>::new(ttl, usize::MAX);
-            let _ = lru_cache.insert(1, 1);
-            let _ = lru_cache.insert(2, 2);
+            lru_cache.insert(1, 1);
+            lru_cache.insert(2, 2);
             advance_time_by_ms(150);
-            let _ = lru_cache.insert(3, 3);
-            let _ = lru_cache.insert(4, 4);
+            lru_cache.insert(3, 3);
+            lru_cache.insert(4, 4);
             advance_time_by_ms(60);
 
             let _ = lru_cache.remove_expired();
@@ -530,11 +530,11 @@ mod tests {
         fn it_removes_expired_entries_from_the_list() {
             let ttl = Duration::from_millis(200);
             let mut lru_cache = LruCache::<usize, usize>::new(ttl, usize::MAX);
-            let _ = lru_cache.insert(1, 1);
-            let _ = lru_cache.insert(2, 2);
+            lru_cache.insert(1, 1);
+            lru_cache.insert(2, 2);
             advance_time_by_ms(150);
-            let _ = lru_cache.insert(3, 3);
-            let _ = lru_cache.insert(4, 4);
+            lru_cache.insert(3, 3);
+            lru_cache.insert(4, 4);
             advance_time_by_ms(60);
 
             let _ = lru_cache.remove_expired();
@@ -548,10 +548,10 @@ mod tests {
         fn it_returns_expired_entries() {
             let ttl = Duration::from_millis(200);
             let mut lru_cache = LruCache::<usize, usize>::new(ttl, usize::MAX);
-            let _ = lru_cache.insert(1, 1);
-            let _ = lru_cache.insert(2, 2);
+            lru_cache.insert(1, 1);
+            lru_cache.insert(2, 2);
             advance_time_by_ms(150);
-            let _ = lru_cache.insert(3, 3);
+            lru_cache.insert(3, 3);
             advance_time_by_ms(60);
 
             let (_, expired) = lru_cache.remove_expired();
