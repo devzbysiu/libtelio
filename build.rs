@@ -40,8 +40,8 @@ fn main() -> Result<()> {
 
     if target_os == "android" {
         let pkg_name = env!("CARGO_PKG_NAME");
-        let soname = format!("lib{}.so", pkg_name);
-        println!("cargo:rustc-cdylib-link-arg=-Wl,-soname,{}", soname);
+        let soname = format!("lib{pkg_name}.so");
+        println!("cargo:rustc-cdylib-link-arg=-Wl,-soname,{soname}");
     }
 
     #[cfg(windows)]
