@@ -599,7 +599,7 @@ mod tests {
             assert_eq!(new.len_slow(), old.len());
             let keys: Vec<_> = new.map.keys().collect();
             for key in keys {
-                assert_eq!(new.peek(&key), old.peek(&key));
+                assert_eq!(new.peek(key), old.peek(key));
             }
         }
 
