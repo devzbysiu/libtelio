@@ -381,7 +381,7 @@ mod tests {
 
         advance_time_by_ms(101);
 
-        assert!(!lru_cache.peek(&0).is_some());
+        assert!(lru_cache.peek(&0).is_none());
         assert_eq!(lru_cache.len(), 0);
     }
 
