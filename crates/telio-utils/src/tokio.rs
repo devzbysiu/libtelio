@@ -79,9 +79,7 @@ impl Monitor for Arc<parking_lot::Mutex<ThreadTracker>> {
                 let time_since_last_change = now - thread_tracker.last_change;
                 if time_since_last_change > ALERT_DURATION
                     && thread_tracker.are_all_threads_parked()
-                    && last_alert
-                        .map(|last_alert| last_alert < thread_tracker.last_change)
-                        .unwrap_or(true)
+                    && last_alert.map_or(true, |last_alert| last_alert < thread_tracker.last_change)
                 {
                     telio_log_warn!(
                         "All tokio threads are parked for {:?}",
